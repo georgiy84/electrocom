@@ -1,0 +1,8 @@
+core_user_homepage:
+    path:     /
+    defaults: { _controller: CoreUserBundle:Default:index }
+    
+core_user_register:
+    path:     /users/{form}
+    defaults: { _controller: CoreUserBundle:Users:register, form: 1 }
+    methods:  [PUT]

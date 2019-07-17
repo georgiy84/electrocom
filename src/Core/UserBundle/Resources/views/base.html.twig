@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <link rel="stylesheet" href="style.css" />
+            <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}" />
+            <title>{% block title %}{% endblock %} - My Chat</title>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#">
+                    <img src="{{asset('public/img/246x0w.jpg')}}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Chat
+                </a>
+            </nav>
+        </div>
+        <div id="content" class="container">{% block content %}{% endblock %}</div>
+        <div id="footer" class="container">
+            {% block footer %}
+                &copy; Copyright 2011 by <a href="http://domain.invalid/">you</a>.
+            {% endblock %}
+        </div>
+        {% block javascript %}
+            <script src="{{asset('public/js/jquery.js')}}"></script>
+            <script src="{{asset('public/js/bootstrap.min.js')}}"></script>
+        {% endblock %}
+    </body>
+</html>
