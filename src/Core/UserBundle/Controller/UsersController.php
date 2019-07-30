@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Core\UserBundle\Entity\users;
+use Core\UserBundle\Form\Type\GenderType;
 
 class UsersController extends Controller {
 
@@ -19,7 +20,8 @@ class UsersController extends Controller {
         $form = $this->createFormBuilder($users)
                 ->add('name', TextType::class)
                 ->add('email', TextType::class)
-                ->add('save', SubmitType::class, ['label' => 'Create Task'])
+                ->add('gender', GenderType::class)
+                ->add('save', SubmitType::class, ['label' => 'Create Usuario'])
                 ->getForm();
 
         return $this->render('CoreUserBundle:Users:register.html.twig', [
