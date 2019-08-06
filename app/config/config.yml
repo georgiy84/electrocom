@@ -8,9 +8,6 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    genders:
-        1: Male
-        2: Female
 
 framework:
     #esi: ~

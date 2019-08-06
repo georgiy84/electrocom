@@ -2,6 +2,8 @@
 
 namespace Core\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,16 @@ class country
     public function getName()
     {
         return $this->name;
+    }
+    
+     /**
+     * @ORM\OneToMany(targetEntity="users", mappedBy="country")
+     */
+    private $Users;
+
+    public function __construct()
+    {
+        $this->Users = new ArrayCollection();
     }
 }
 

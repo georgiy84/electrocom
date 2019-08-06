@@ -34,11 +34,18 @@ class users
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
+    
+    /**
+     * The below length depends on the "algorithm" you use for encoding
+     * the password, but this works well with bcrypt.
+     *
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="country", type="integer")
+     * @ORM\ManyToOne(targetEntity="country", inversedBy="users")
+     * @ORM\JoinColumn(name="country", referencedColumnName="id")
      */
     private $country;
 
@@ -52,21 +59,21 @@ class users
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_up", type="date")
+     * @ORM\Column(name="date_up", type="datetime")
      */
     private $dateUp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_edit", type="date")
+     * @ORM\Column(name="date_edit", type="datetime")
      */
     private $dateEdit;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_access", type="date")
+     * @ORM\Column(name="date_access", type="datetime")
      */
     private $dateAccess;
 
@@ -118,7 +125,7 @@ class users
 
         return $this;
     }
-
+    
     /**
      * Get email
      *
@@ -127,6 +134,24 @@ class users
     public function getEmail()
     {
         return $this->email;
+    }
+    
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    function getPassword() {
+        return $this->password;
+    }
+    
+    /**
+     * Set password
+     *
+     * @return string
+     */
+    function setPassword($password) {
+        $this->password = $password;
     }
 
     /**
