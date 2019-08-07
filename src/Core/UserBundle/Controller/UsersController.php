@@ -9,14 +9,13 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Core\UserBundle\Entity\users;
-use Symfony\Component\BrowserKit\Response;
 
 class UsersController extends Controller {
 
     public function registerAction(Request $formRequest) {
-        
-        if ($formRequest->request->get('form')['save']){
-            $this->createAction($formRequest->request->get('form'));
+
+        if ($formRequest->request->get('form')['save']) {
+            $createUser = $this->createAction($formRequest->request->get('form'));
         }
         $em = $this->getDoctrine()->getEntityManager();
         $country_array = array();
@@ -42,15 +41,25 @@ class UsersController extends Controller {
                 ->add('save', SubmitType::class, ['label' => 'Create Usuario', 'attr' => ['value' => '1']])
                 ->getForm();
 
-        return $this->render('CoreUserBundle:Users:register.html.twig', [
-                    'form' => $form->createView(),
-        ]);
+        if (isset($createUser) && $createUser == 1) {
+            return $this->render('CoreUserBundle:Users:register_finish.html.twig', [
+                        'createUser' => 1,
+            ]);
+        } else if (isset($createUser) && $createUser == 0) {
+            return $this->render('CoreUserBundle:Users:register_finish.html.twig', [
+                        'createUser' => 0,
+            ]);
+        } else {
+            return $this->render('CoreUserBundle:Users:register.html.twig', [
+                        'form' => $form->createView(),
+            ]);
+        }
     }
 
     public function createAction($formRequest) {
-        
+
         $dateNow = new \DateTime("now");
-        
+
         $em = $this->getDoctrine()->getEntityManager();
         $Country = $em->getRepository('Core\UserBundle\Entity\country')->find($formRequest['country']);
         $entityManager = $this->getDoctrine()->getManager();
@@ -66,13 +75,10 @@ class UsersController extends Controller {
         $users->setDateEdit($dateNow);
         $users->setDateAccess($dateNow);
 
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($users);
 
-        // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
-
-        return new Response('Saved new product with id ' . $users->getId());
+        return 1;
     }
 
 }
