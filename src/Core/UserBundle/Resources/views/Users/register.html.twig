@@ -32,11 +32,20 @@
             </ul>
         </div>
     </nav>
-    <h1>Registrar</h1>
-    <p class="important">
-        Formulario
-    </p>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="card">
+        <div class="card-body">
+            <h1>Registrar</h1>
+            <p class="important">
+                Formulario
+            </p>
+            {% for error in errors %}
+                <li><p class="text-danger">{{ error.message }}</p></li>
+                {% endfor %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_row(form.password.first) }}
+                {{ form_row(form.password.second) }}
+                {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

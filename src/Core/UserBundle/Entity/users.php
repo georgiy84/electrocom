@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Core\UserBundle\Repository\usersRepository")
  */
-class users
-{
+class users {
+
     /**
      * @var int
      *
@@ -34,7 +34,7 @@ class users
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
-    
+
     /**
      * The below length depends on the "algorithm" you use for encoding
      * the password, but this works well with bcrypt.
@@ -77,14 +77,12 @@ class users
      */
     private $dateAccess;
 
-
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -95,8 +93,7 @@ class users
      *
      * @return users
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -107,8 +104,7 @@ class users
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -119,23 +115,21 @@ class users
      *
      * @return users
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
     }
-    
+
     /**
      * Get email
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
-    
+
     /**
      * Get password
      *
@@ -144,7 +138,7 @@ class users
     function getPassword() {
         return $this->password;
     }
-    
+
     /**
      * Set password
      *
@@ -161,8 +155,7 @@ class users
      *
      * @return users
      */
-    public function setCountry($country)
-    {
+    public function setCountry($country) {
         $this->country = $country;
 
         return $this;
@@ -173,8 +166,7 @@ class users
      *
      * @return int
      */
-    public function getCountry()
-    {
+    public function getCountry() {
         return $this->country;
     }
 
@@ -185,8 +177,7 @@ class users
      *
      * @return users
      */
-    public function setGender($gender)
-    {
+    public function setGender($gender) {
         $this->gender = $gender;
 
         return $this;
@@ -197,8 +188,7 @@ class users
      *
      * @return int
      */
-    public function getGender()
-    {
+    public function getGender() {
         return $this->gender;
     }
 
@@ -209,8 +199,7 @@ class users
      *
      * @return users
      */
-    public function setDateUp($dateUp)
-    {
+    public function setDateUp($dateUp) {
         $this->dateUp = $dateUp;
 
         return $this;
@@ -221,8 +210,7 @@ class users
      *
      * @return \DateTime
      */
-    public function getDateUp()
-    {
+    public function getDateUp() {
         return $this->dateUp;
     }
 
@@ -233,8 +221,7 @@ class users
      *
      * @return users
      */
-    public function setDateEdit($dateEdit)
-    {
+    public function setDateEdit($dateEdit) {
         $this->dateEdit = $dateEdit;
 
         return $this;
@@ -245,8 +232,7 @@ class users
      *
      * @return \DateTime
      */
-    public function getDateEdit()
-    {
+    public function getDateEdit() {
         return $this->dateEdit;
     }
 
@@ -257,8 +243,7 @@ class users
      *
      * @return users
      */
-    public function setDateAccess($dateAccess)
-    {
+    public function setDateAccess($dateAccess) {
         $this->dateAccess = $dateAccess;
 
         return $this;
@@ -269,9 +254,8 @@ class users
      *
      * @return \DateTime
      */
-    public function getDateAccess()
-    {
+    public function getDateAccess() {
         return $this->dateAccess;
     }
-}
 
+}
