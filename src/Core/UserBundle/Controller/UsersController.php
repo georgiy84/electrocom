@@ -12,10 +12,13 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Core\UserBundle\Entity\users;
+use Core\UserBundle\Services\CreateAction;
 
 class UsersController extends Controller {
 
     private $email;
+    
+    
 
     public function registerAction(Request $formRequest) {
 
@@ -24,7 +27,7 @@ class UsersController extends Controller {
 
         $users = new users();
         $countryEm = $em->getRepository('CoreUserBundle:country');
-
+        $create_action = $this->get(CreateAction::class);//core_user.create_action
         for ($i = 0; $i < sizeof($countryEm->findAll()); $i++) {
             $country_array[$countryEm->findAll()[$i]->getName()] = $countryEm->findAll()[$i]->getId();
         }
@@ -34,11 +37,11 @@ class UsersController extends Controller {
                 ->add('email', TextType::class)
                 ->add('password', RepeatedType::class, [
                     'type' => PasswordType::class,
-                    'invalid_message' => 'The password fields must match.',
+                    'invalid_message' => 'Password en ambos campos deben ser iguales.',
                     'options' => ['attr' => ['class' => 'password-field']],
                     'required' => true,
                     'first_options' => ['label' => 'Password'],
-                    'second_options' => ['label' => 'Repeat Password'],
+                    'second_options' => ['label' => 'Confirme Password'],
                 ])
                 ->add('gender', ChoiceType::class, ['choices' => array(
                         'Masculino' => '1',
@@ -51,8 +54,7 @@ class UsersController extends Controller {
                 ->getForm();
 
         if ($formRequest->request->get('form')['save']) {
-            //dump($formRequest->request->get('form')['email']);
-            //die();
+
             $this->email = $formRequest->request->get('form')['email'];
             $validate = $this->validatorEmailAction();
             
@@ -62,7 +64,9 @@ class UsersController extends Controller {
                             'errors' => $validate,
                 ]);
             }
-            $createUser = $this->createAction($formRequest->request->get('form'));
+            
+            
+            $createUser = $create_action->createAction($formRequest->request->get('form'));
         }
 
         if (isset($createUser) && $createUser == 1) {
@@ -78,31 +82,6 @@ class UsersController extends Controller {
                         'form' => $form->createView(),
             ]);
         }
-    }
-
-    public function createAction($formRequest) {
-
-        $dateNow = new \DateTime("now");
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $Country = $em->getRepository('Core\UserBundle\Entity\country')->find($formRequest['country']);
-        $entityManager = $this->getDoctrine()->getManager();
-
-
-        $users = new users();
-        $users->setName($formRequest['name']);
-        $users->setEmail($formRequest['email']);
-        $users->setPassword($formRequest['password']['first']);
-        $users->setCountry($Country);
-        $users->setGender($formRequest['gender']);
-        $users->setDateUp($dateNow);
-        $users->setDateEdit($dateNow);
-        $users->setDateAccess($dateNow);
-
-        $entityManager->persist($users);
-
-        $entityManager->flush();
-        return 1;
     }
 
     public function validatorEmailAction() {
