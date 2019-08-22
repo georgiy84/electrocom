@@ -1,6 +1,7 @@
 <?php
 
 namespace Core\UserBundle\Entity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Core\UserBundle\Repository\usersRepository")
  */
-class users {
+class users implements UserInterface, \Serializable{
 
     /**
      * @var int
@@ -256,6 +257,51 @@ class users {
      */
     public function getDateAccess() {
         return $this->dateAccess;
+    }
+    
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+    
+     public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+    
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ]);
+    }
+    
+     /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
 }
