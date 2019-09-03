@@ -273,7 +273,7 @@ class users implements UserInterface, \Serializable{
     
     public function getUsername()
     {
-        return $this->username;
+        return $this->name;
     }
     
     public function eraseCredentials()
@@ -285,7 +285,7 @@ class users implements UserInterface, \Serializable{
     {
         return serialize([
             $this->id,
-            $this->username,
+            $this->name,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -297,7 +297,7 @@ class users implements UserInterface, \Serializable{
     {
         list (
             $this->id,
-            $this->username,
+            $this->name,
             $this->password,
             // see section on salt below
             // $this->salt

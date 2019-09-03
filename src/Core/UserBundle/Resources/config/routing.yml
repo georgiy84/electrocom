@@ -6,3 +6,14 @@ core_user_register:
     path:     /users/
     defaults: { _controller: CoreUserBundle:Users:register}
     methods:  [POST, GET]
+    
+core_user_login:
+    path:     /login/
+    defaults: { _controller: CoreUserBundle:Login:login}
+    methods:  [POST, GET]
+    
+core_user_logout:
+    path:     /logout/
+    defaults: { _controller: CoreUserBundle:Login:logout}
+    methods:  [POST, GET]
+    
