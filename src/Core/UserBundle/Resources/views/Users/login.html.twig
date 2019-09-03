@@ -25,7 +25,7 @@
                         Cuenta<span class="sr-only">(current)</span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('core_user_login') }}">LogIn</a>
+                        <a class="dropdown-item" href="#">LogIn</a>
                         <a class="dropdown-item" href="{{ path('core_user_register') }}">Registrar</a>
                     </div>
                 </li>
@@ -34,20 +34,19 @@
     </nav>
     <div class="card">
         <div class="card-body">
-            <h1>Registrar</h1>
-            <p class="important">
-                Formulario
-            </p>
-            {% if errors is defined %}
-                {% for error in errors %}
-                    <li><p class="text-danger">{{ error.message }}</p></li>
-                    {% endfor %}
-                {% endif %}
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_row(form.password.first) }}
-                {{ form_row(form.password.second) }}
-                {{ form_end(form) }}
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <form action="{{ path('core_user_login') }}" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="_password" />
+
+                <input type="submit" name="login" />
+            </form>
         </div>
     </div>
 {% endblock %}
